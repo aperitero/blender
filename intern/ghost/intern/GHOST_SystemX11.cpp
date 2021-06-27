@@ -1525,6 +1525,17 @@ void GHOST_SystemX11::processEvent(XEvent *xe)
     ((axis_first <= axis && axes_end > axis) && \
      ((void)(val = data->axis_data[axis - axis_first]), true))
 
+          if (AXIS_VALUE_GET(0, axis_value)) {
+            window->GetTabletData().x = axis_value;
+            window->GetTabletData().xFac = (axis_value - xtablet.XMin) /
+                                           ((float)xtablet.XMax - xtablet.XMin);
+          }
+          if (AXIS_VALUE_GET(1, axis_value)) {
+            window->GetTabletData().y = axis_value;
+            window->GetTabletData().yFac = (axis_value - xtablet.YMin) /
+                                           ((float)xtablet.YMax - xtablet.YMin);
+          }
+
           if (AXIS_VALUE_GET(2, axis_value)) {
             window->GetTabletData().Pressure = axis_value / ((float)xtablet.PressureLevels);
           }
@@ -2670,6 +2681,11 @@ void GHOST_SystemX11::refreshXInputDevices()
                 XValuatorInfo *xvi = (XValuatorInfo *)ici;
                 if (xvi->axes != NULL) {
                   xtablet.PressureLevels = xvi->axes[2].max_value;
+
+                  xtablet.XMin = xvi->axes[0].min_value;
+                  xtablet.XMax = xvi->axes[0].max_value;
+                  xtablet.YMin = xvi->axes[1].min_value;
+                  xtablet.YMax = xvi->axes[1].max_value;
 
                   if (xvi->num_axes > 3) {
                     /* This is assuming that the tablet has the same tilt resolution in both

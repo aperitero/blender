@@ -974,6 +974,30 @@ void wm_cursor_position_from_ghost(wmWindow *win, int *x, int *y)
   *y *= fac;
 }
 
+void wm_cursor_position_from_ghost_hires(wmWindow *win,
+                                         int *x, int *y,
+                                         float *xHiRes, float *yHiRes)
+{
+  float fac = GHOST_GetNativePixelSize(win->ghostwin);
+
+  int oldx, oldy;
+  oldx = *x;
+  oldy = *y;
+  
+  GHOST_ScreenToClient(win->ghostwin, *x, *y, x, y);
+
+  // Not tested, I don't know in which circumstances
+  // GHOST_ScreenToClient would change the cursor position.
+  *xHiRes += *x - oldx;
+  *yHiRes += *y - oldy;
+
+  *y = (win->sizey - 1) - *y;
+  *yHiRes = (win->sizey - 1) - *yHiRes;
+
+  *x *= fac;
+  *y *= fac;
+}
+
 void wm_cursor_position_to_ghost(wmWindow *win, int *x, int *y)
 {
   float fac = GHOST_GetNativePixelSize(win->ghostwin);
@@ -1468,7 +1492,24 @@ static int ghost_event_proc(GHOST_EventHandle evt, GHOST_TUserDataPtr C_void_ptr
       case GHOST_kEventCursorMove: {
         GHOST_TEventCursorData *cd = data;
 
-        wm_cursor_position_from_ghost(win, &cd->x, &cd->y);
+        if (cd->tablet.Active == GHOST_kTabletModeNone)
+        {
+          cd->xHiRes = (float)cd->x;
+          cd->yHiRes = (float)cd->y;
+        }
+        else {
+          /** Converting x/y from tablet to screen space */
+          int width, height;
+          wm_get_screensize(&width, &height);
+          
+          cd->xHiRes = cd->tablet.xFac * width;
+          cd->yHiRes = cd->tablet.yFac * height;
+        }
+         
+        wm_cursor_position_from_ghost_hires(win,
+                                            &cd->x, &cd->y,
+                                            &cd->xHiRes, &cd->yHiRes);
+        
         wm_event_add_ghostevent(wm, win, type, data);
         break;
       }

@@ -67,7 +67,9 @@ bool GHOST_EventPrinter::processEvent(GHOST_IEvent *event)
     case GHOST_kEventCursorMove: {
       GHOST_TEventCursorData *cursorData =
           (GHOST_TEventCursorData *)((GHOST_IEvent *)event)->getData();
-      std::cout << "GHOST_kEventCursorMove, (x,y): (" << cursorData->x << "," << cursorData->y
+      std::cout << "GHOST_kEventCursorMove, (x,y)(xHiRes,yHiRes):\n (" << cursorData->x << "," << cursorData->y
+                << ")("
+                << cursorData->xHiRes << "," << cursorData->yHiRes
                 << ")";
     } break;
 

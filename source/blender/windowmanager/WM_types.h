@@ -591,8 +591,14 @@ typedef struct wmEvent {
   short val;
   /** Mouse pointer position, screen coord. */
   int x, y;
+  /** Tablet pen position */
+  float xHiRes, yHiRes;
+
   /** Region relative mouse position (name convention before Blender 2.5). */
   int mval[2];
+  /** Region relative tablet pen position */
+  float mvalHiRes[2];
+
   /**
    * From, ghost if utf8 is enabled for the platform,
    * #BLI_str_utf8_size() must _always_ be valid, check

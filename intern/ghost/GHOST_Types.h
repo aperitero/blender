@@ -103,13 +103,25 @@ typedef struct GHOST_TabletData {
   float Pressure;           /* range 0.0 (not touching) to 1.0 (full pressure) */
   float Xtilt; /* range 0.0 (upright) to 1.0 (tilted fully against the tablet surface) */
   float Ytilt; /* as above */
+
+  /* x/y pen coordinates in tablet space */
+  int x;
+  int y;
+
+  /* x/y normalized coordinates (from 0 to 1) */
+  float xFac;
+  float yFac;
 } GHOST_TabletData;
 
 static const GHOST_TabletData GHOST_TABLET_DATA_NONE = {
     GHOST_kTabletModeNone, /* No cursor in range */
     1.0f,                  /* Pressure */
     0.0f,                  /* Xtilt */
-    0.0f};                 /* Ytilt */
+    0.0f,                  /* Ytilt */
+    0,                     /* x */
+    0,                     /* y */
+    0.0f,                  /* xFac */
+    0.0f};                 /* yFac */
 
 typedef enum {
   GHOST_kNotVisible = 0,
@@ -426,6 +438,11 @@ typedef struct {
   int32_t x;
   /** The y-coordinate of the cursor position. */
   int32_t y;
+
+  /** x-y coordinates from higher resolution input devices like tablets */
+  float xHiRes;
+  float yHiRes;
+
   /** Associated tablet data. */
   GHOST_TabletData tablet;
 } GHOST_TEventCursorData;

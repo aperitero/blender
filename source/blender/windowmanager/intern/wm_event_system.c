@@ -1288,11 +1288,15 @@ static void wm_region_mouse_co(bContext *C, wmEvent *event)
     /* Compatibility convention. */
     event->mval[0] = event->x - region->winrct.xmin;
     event->mval[1] = event->y - region->winrct.ymin;
+    event->mvalHiRes[0] = event->xHiRes - region->winrct.xmin;
+    event->mvalHiRes[1] = event->yHiRes - region->winrct.ymin;
   }
   else {
     /* These values are invalid (avoid odd behavior by relying on old mval values). */
     event->mval[0] = -1;
     event->mval[1] = -1;
+    event->mvalHiRes[0] = -1.0f;
+    event->mvalHiRes[1] = -1.0f;
   }
 }
 
@@ -4506,6 +4510,8 @@ void wm_event_add_ghostevent(wmWindowManager *wm, wmWindow *win, int type, void 
       GHOST_TEventCursorData *cd = customdata;
 
       copy_v2_v2_int(&event.x, &cd->x);
+      copy_v2_v2(&event.xHiRes, &cd->xHiRes);
+
       wm_stereo3d_mouse_offset_apply(win, &event.x);
       wm_tablet_data_from_ghost(&cd->tablet, &event.tablet);
 
@@ -4513,6 +4519,7 @@ void wm_event_add_ghostevent(wmWindowManager *wm, wmWindow *win, int type, void 
       {
         wmEvent *event_new = wm_event_add_mousemove(win, &event);
         copy_v2_v2_int(&event_state->x, &event_new->x);
+        copy_v2_v2(&event_state->xHiRes, &event_new->xHiRes);
         event_state->tablet.is_motion_absolute = event_new->tablet.is_motion_absolute;
       }
 

@@ -367,8 +367,8 @@ static void gpencil_get_3d_reference(tGPsdata *p, float vec[3])
 static bool gpencil_stroke_filtermval(tGPsdata *p, const float mval[2], const float mvalo[2])
 {
   Brush *brush = p->brush;
-  int dx = (int)fabsf(mval[0] - mvalo[0]);
-  int dy = (int)fabsf(mval[1] - mvalo[1]);
+  float dx = fabsf(mval[0] - mvalo[0]);
+  float dy = fabsf(mval[1] - mvalo[1]);
   brush->gpencil_settings->flag &= ~GP_BRUSH_STABILIZE_MOUSE_TEMP;
 
   /* if buffer is empty, just let this go through (i.e. so that dots will work) */
@@ -2862,7 +2862,8 @@ static void gpencil_draw_apply_event(bContext *C,
   /* convert from window-space to area-space mouse coordinates
    * add any x,y override position
    */
-  copy_v2fl_v2i(p->mval, event->mval);
+  copy_v2_v2(p->mval, event->mvalHiRes);
+
   p->shift = event->shift;
 
   /* verify direction for straight lines and guides */
@@ -3565,7 +3566,7 @@ static void gpencil_add_fake_points(const wmEvent *event, tGPsdata *p)
   float min_dist = 4.0f * samples;
 
   copy_v2_v2(mouse_prv, p->mvalo);
-  copy_v2fl_v2i(mouse_cur, event->mval);
+  copy_v2_v2(mouse_cur, event->mvalHiRes);
 
   /* get distance in pixels */
   float dist = len_v2v2(mouse_prv, mouse_cur);
