@@ -1435,7 +1435,7 @@ int paint_stroke_modal(bContext *C, wmOperator *op, const wmEvent *event)
     stroke->last_tablet_event_pressure = pressure;
   }
 
-  paint_stroke_add_sample(p, stroke, event->mval[0], event->mval[1], pressure);
+  paint_stroke_add_sample(p, stroke, event->mvalHiRes[0], event->mvalHiRes[1], pressure);
   paint_stroke_sample_average(stroke, &sample_average);
 
   /* Tilt. */
