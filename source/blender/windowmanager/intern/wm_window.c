@@ -983,7 +983,7 @@ void wm_cursor_position_from_ghost_hires(wmWindow *win,
   int oldx, oldy;
   oldx = *x;
   oldy = *y;
-  
+
   GHOST_ScreenToClient(win->ghostwin, *x, *y, x, y);
 
   *xHiRes += *x - oldx;
@@ -1500,15 +1500,15 @@ static int ghost_event_proc(GHOST_EventHandle evt, GHOST_TUserDataPtr C_void_ptr
           /** Converting x/y from tablet to screen space */
           int width, height;
           wm_get_screensize(&width, &height);
-          
+
           cd->xHiRes = cd->tablet.xFac * width;
           cd->yHiRes = cd->tablet.yFac * height;
         }
-         
+
         wm_cursor_position_from_ghost_hires(win,
                                             &cd->x, &cd->y,
                                             &cd->xHiRes, &cd->yHiRes);
-        
+
         wm_event_add_ghostevent(wm, win, type, data);
         break;
       }

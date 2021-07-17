@@ -104,11 +104,11 @@ typedef struct GHOST_TabletData {
   float Xtilt; /* range 0.0 (upright) to 1.0 (tilted fully against the tablet surface) */
   float Ytilt; /* as above */
 
-  /* x/y pen coordinates in tablet space */
+  /* The x/y pen coordinates in tablet space. */
   int x;
   int y;
 
-  /* x/y normalized coordinates (from 0 to 1) */
+  /* The x/y normalized coordinates (from 0 to 1). */
   float xFac;
   float yFac;
 } GHOST_TabletData;
@@ -439,7 +439,7 @@ typedef struct {
   /** The y-coordinate of the cursor position. */
   int32_t y;
 
-  /** x-y coordinates from higher resolution input devices like tablets */
+  /** The x-y coordinates from higher resolution input devices like tablets. */
   float xHiRes;
   float yHiRes;
 
