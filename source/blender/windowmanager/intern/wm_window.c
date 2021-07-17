@@ -1492,7 +1492,8 @@ static int ghost_event_proc(GHOST_EventHandle evt, GHOST_TUserDataPtr C_void_ptr
       case GHOST_kEventCursorMove: {
         GHOST_TEventCursorData *cd = data;
 
-        if (cd->tablet.Active == GHOST_kTabletModeNone)
+        if (   cd->tablet.Active == GHOST_kTabletModeNone
+            || (!cd->tablet.xFac && !cd->tablet.yFac))
         {
           cd->xHiRes = (float)cd->x;
           cd->yHiRes = (float)cd->y;
