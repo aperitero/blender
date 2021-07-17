@@ -986,8 +986,6 @@ void wm_cursor_position_from_ghost_hires(wmWindow *win,
   
   GHOST_ScreenToClient(win->ghostwin, *x, *y, x, y);
 
-  // Not tested, I don't know in which circumstances
-  // GHOST_ScreenToClient would change the cursor position.
   *xHiRes += *x - oldx;
   *yHiRes += *y - oldy;
 
