@@ -114,8 +114,8 @@ static const GHOST_TabletData GHOST_TABLET_DATA_NONE = {
     1.0f,                  /* Pressure */
     0.0f,                  /* Xtilt */
     0.0f,                  /* Ytilt */
-    0.0f,                  /* xFac */
-    0.0f};                 /* yFac */
+    0.0f,                  /* Xfac */
+    0.0f};                 /* Yfac */
 
 typedef enum {
   GHOST_kNotVisible = 0,
