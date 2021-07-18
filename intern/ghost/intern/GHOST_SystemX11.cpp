@@ -962,8 +962,7 @@ void GHOST_SystemX11::processEvent(XEvent *xe)
     case MotionNotify: {
       XMotionEvent &xme = xe->xmotion;
 
-      GHOST_TabletData* tabletData = &window->GetTabletData();
-      bool is_tablet = tabletData->Active != GHOST_kTabletModeNone;
+      bool is_tablet = window->GetTabletData().Active != GHOST_kTabletModeNone;
 
       if (is_tablet == true) {
         uint32_t screenWidth, screenHeight;
@@ -973,9 +972,9 @@ void GHOST_SystemX11::processEvent(XEvent *xe)
                                         window,
                                         xme.x_root,
                                         xme.y_root,
-                                        tabletData->Xfac * screenWidth,
-                                        tabletData->Yfac * screenHeight,
-                                        *tabletData);
+                                        window->GetTabletData().Xfac * screenWidth,
+                                        window->GetTabletData().Yfac * screenHeight,
+                                        window->GetTabletData());
       }
       else if (window->getCursorGrabModeIsWarp()) {
         int32_t x_new = xme.x_root;
@@ -1019,7 +1018,7 @@ void GHOST_SystemX11::processEvent(XEvent *xe)
                                           window,
                                           xme.x_root + x_accum,
                                           xme.y_root + y_accum,
-                                          *tabletData);
+                                          window->GetTabletData());
         }
       }
       else {
@@ -1028,7 +1027,7 @@ void GHOST_SystemX11::processEvent(XEvent *xe)
                                         window,
                                         xme.x_root,
                                         xme.y_root,
-                                        *tabletData);
+                                        window->GetTabletData());
       }
       break;
     }
