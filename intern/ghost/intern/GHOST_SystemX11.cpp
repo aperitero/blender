@@ -1538,12 +1538,12 @@ void GHOST_SystemX11::processEvent(XEvent *xe)
      ((void)(val = data->axis_data[axis - axis_first]), true))
 
           if (AXIS_VALUE_GET(0, axis_value)) {
-            window->GetTabletData().Xfac = (axis_value - xtablet.XMin) /
-                                           ((float)xtablet.XMax - xtablet.XMin);
+            window->GetTabletData().Xfac = (axis_value - xtablet.Xmin) /
+                                           ((float)xtablet.Xmax - xtablet.Xmin);
           }
           if (AXIS_VALUE_GET(1, axis_value)) {
-            window->GetTabletData().Yfac = (axis_value - xtablet.YMin) /
-                                           ((float)xtablet.YMax - xtablet.YMin);
+            window->GetTabletData().Yfac = (axis_value - xtablet.Ymin) /
+                                           ((float)xtablet.Ymax - xtablet.Ymin);
           }
 
           if (AXIS_VALUE_GET(2, axis_value)) {
@@ -2692,10 +2692,10 @@ void GHOST_SystemX11::refreshXInputDevices()
                 if (xvi->axes != NULL) {
                   xtablet.PressureLevels = xvi->axes[2].max_value;
 
-                  xtablet.XMin = xvi->axes[0].min_value;
-                  xtablet.XMax = xvi->axes[0].max_value;
-                  xtablet.YMin = xvi->axes[1].min_value;
-                  xtablet.YMax = xvi->axes[1].max_value;
+                  xtablet.Xmin = xvi->axes[0].min_value;
+                  xtablet.Xmax = xvi->axes[0].max_value;
+                  xtablet.Ymin = xvi->axes[1].min_value;
+                  xtablet.Ymax = xvi->axes[1].max_value;
 
                   if (xvi->num_axes > 3) {
                     /* This is assuming that the tablet has the same tilt resolution in both

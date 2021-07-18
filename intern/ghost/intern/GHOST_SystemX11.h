@@ -288,7 +288,7 @@ class GHOST_SystemX11 : public GHOST_System {
     int PressureLevels;
     int XtiltLevels, YtiltLevels;
 
-    int XMin, XMax, YMin, YMax;
+    int Xmin, Xmax, Ymin, Ymax;
   } GHOST_TabletX11;
 
   std::vector<GHOST_TabletX11> &GetXTablets()
