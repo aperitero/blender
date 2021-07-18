@@ -105,8 +105,8 @@ typedef struct GHOST_TabletData {
   float Ytilt; /* as above */
 
   /* The x/y normalized coordinates of the pen on the tablet (from 0 to 1). */
-  float xFac;
-  float yFac;
+  float Xfac;
+  float Yfac;
 } GHOST_TabletData;
 
 static const GHOST_TabletData GHOST_TABLET_DATA_NONE = {

@@ -973,8 +973,8 @@ void GHOST_SystemX11::processEvent(XEvent *xe)
                                         window,
                                         xme.x_root,
                                         xme.y_root,
-                                        tabletData->xFac * screenWidth,
-                                        tabletData->yFac * screenHeight,
+                                        tabletData->Xfac * screenWidth,
+                                        tabletData->Yfac * screenHeight,
                                         *tabletData);
       }
       else if (window->getCursorGrabModeIsWarp()) {
@@ -1539,11 +1539,11 @@ void GHOST_SystemX11::processEvent(XEvent *xe)
      ((void)(val = data->axis_data[axis - axis_first]), true))
 
           if (AXIS_VALUE_GET(0, axis_value)) {
-            window->GetTabletData().xFac = (axis_value - xtablet.XMin) /
+            window->GetTabletData().Xfac = (axis_value - xtablet.XMin) /
                                            ((float)xtablet.XMax - xtablet.XMin);
           }
           if (AXIS_VALUE_GET(1, axis_value)) {
-            window->GetTabletData().yFac = (axis_value - xtablet.YMin) /
+            window->GetTabletData().Yfac = (axis_value - xtablet.YMin) /
                                            ((float)xtablet.YMax - xtablet.YMin);
           }
 
