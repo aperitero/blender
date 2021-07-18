@@ -50,6 +50,19 @@ class GHOST_EventCursor : public GHOST_Event {
     m_data = &m_cursorEventData;
   }
 
+  GHOST_EventCursor(uint64_t msec,
+                    GHOST_TEventType type,
+                    GHOST_IWindow *window,
+                    int32_t x,
+                    int32_t y,
+                    float xHiRes,
+                    float yHiRes,
+                    const GHOST_TabletData &tablet)
+      : GHOST_Event(msec, type, window), m_cursorEventData({x, y, xHiRes, yHiRes, tablet})
+  {
+    m_data = &m_cursorEventData;
+  }
+
  protected:
   /** The x,y-coordinates of the cursor position. */
   GHOST_TEventCursorData m_cursorEventData;

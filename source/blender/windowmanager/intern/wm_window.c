@@ -1490,21 +1490,6 @@ static int ghost_event_proc(GHOST_EventHandle evt, GHOST_TUserDataPtr C_void_ptr
       case GHOST_kEventCursorMove: {
         GHOST_TEventCursorData *cd = data;
 
-        if (   cd->tablet.Active == GHOST_kTabletModeNone
-            || (!cd->tablet.xFac && !cd->tablet.yFac))
-        {
-          cd->xHiRes = (float)cd->x;
-          cd->yHiRes = (float)cd->y;
-        }
-        else {
-          /** Converting x/y from tablet to screen space */
-          int width, height;
-          wm_get_screensize(&width, &height);
-
-          cd->xHiRes = cd->tablet.xFac * width;
-          cd->yHiRes = cd->tablet.yFac * height;
-        }
-
         wm_cursor_position_from_ghost_hires(win,
                                             &cd->x, &cd->y,
                                             &cd->xHiRes, &cd->yHiRes);

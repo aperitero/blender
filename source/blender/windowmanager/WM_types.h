@@ -591,7 +591,7 @@ typedef struct wmEvent {
   short val;
   /** Mouse pointer position, screen coord. */
   int x, y;
-  /** Tablet pen position. */
+  /** Tablet pen position, screen coord. */
   float xHiRes, yHiRes;
 
   /** Region relative mouse position (name convention before Blender 2.5). */

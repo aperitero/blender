@@ -962,9 +962,22 @@ void GHOST_SystemX11::processEvent(XEvent *xe)
     case MotionNotify: {
       XMotionEvent &xme = xe->xmotion;
 
-      bool is_tablet = window->GetTabletData().Active != GHOST_kTabletModeNone;
+      GHOST_TabletData* tabletData = &window->GetTabletData();
+      bool is_tablet = tabletData->Active != GHOST_kTabletModeNone;
 
-      if (is_tablet == false && window->getCursorGrabModeIsWarp()) {
+      if (is_tablet == true) {
+        uint32_t screenWidth, screenHeight;
+        getMainDisplayDimensions(screenWidth, screenHeight);
+        g_event = new GHOST_EventCursor(getMilliSeconds(),
+                                        GHOST_kEventCursorMove,
+                                        window,
+                                        xme.x_root,
+                                        xme.y_root,
+                                        tabletData->xFac * screenWidth,
+                                        tabletData->yFac * screenHeight,
+                                        *tabletData);
+      }
+      else if (window->getCursorGrabModeIsWarp()) {
         int32_t x_new = xme.x_root;
         int32_t y_new = xme.y_root;
         int32_t x_accum, y_accum;
@@ -1006,7 +1019,7 @@ void GHOST_SystemX11::processEvent(XEvent *xe)
                                           window,
                                           xme.x_root + x_accum,
                                           xme.y_root + y_accum,
-                                          window->GetTabletData());
+                                          *tabletData);
         }
       }
       else {
@@ -1015,7 +1028,7 @@ void GHOST_SystemX11::processEvent(XEvent *xe)
                                         window,
                                         xme.x_root,
                                         xme.y_root,
-                                        window->GetTabletData());
+                                        *tabletData);
       }
       break;
     }
@@ -1526,12 +1539,10 @@ void GHOST_SystemX11::processEvent(XEvent *xe)
      ((void)(val = data->axis_data[axis - axis_first]), true))
 
           if (AXIS_VALUE_GET(0, axis_value)) {
-            window->GetTabletData().x = axis_value;
             window->GetTabletData().xFac = (axis_value - xtablet.XMin) /
                                            ((float)xtablet.XMax - xtablet.XMin);
           }
           if (AXIS_VALUE_GET(1, axis_value)) {
-            window->GetTabletData().y = axis_value;
             window->GetTabletData().yFac = (axis_value - xtablet.YMin) /
                                            ((float)xtablet.YMax - xtablet.YMin);
           }
