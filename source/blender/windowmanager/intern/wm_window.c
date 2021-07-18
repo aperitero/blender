@@ -994,6 +994,9 @@ void wm_cursor_position_from_ghost_hires(wmWindow *win,
 
   *x *= fac;
   *y *= fac;
+
+  *xHiRes *= fac;
+  *yHiRes *= fac;
 }
 
 void wm_cursor_position_to_ghost(wmWindow *win, int *x, int *y)
