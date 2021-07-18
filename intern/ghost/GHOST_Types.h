@@ -104,7 +104,7 @@ typedef struct GHOST_TabletData {
   float Xtilt; /* range 0.0 (upright) to 1.0 (tilted fully against the tablet surface) */
   float Ytilt; /* as above */
 
-  /* The x/y normalized coordinates (from 0 to 1). */
+  /* The x/y normalized coordinates of the pen on the tablet (from 0 to 1). */
   float xFac;
   float yFac;
 } GHOST_TabletData;
