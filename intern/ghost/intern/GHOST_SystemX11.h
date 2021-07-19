@@ -347,6 +347,9 @@ class GHOST_SystemX11 : public GHOST_System {
 #ifdef WITH_X11_XINPUT
   /* Tablet devices */
   std::vector<GHOST_TabletX11> m_xtablets;
+
+  /** The normalized pen coordinates on the active tablet. */
+  float m_xtablet_xfac, m_xtablet_yfac;
 #endif
 
   /** The vector of windows that need to be updated. */

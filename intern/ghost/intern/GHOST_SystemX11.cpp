@@ -972,8 +972,8 @@ void GHOST_SystemX11::processEvent(XEvent *xe)
                                         window,
                                         xme.x_root,
                                         xme.y_root,
-                                        window->GetTabletData().Xfac * screenWidth,
-                                        window->GetTabletData().Yfac * screenHeight,
+                                        m_xtablet_xfac * screenWidth,
+                                        m_xtablet_yfac * screenHeight,
                                         window->GetTabletData());
       }
       else if (window->getCursorGrabModeIsWarp()) {
@@ -1538,12 +1538,12 @@ void GHOST_SystemX11::processEvent(XEvent *xe)
      ((void)(val = data->axis_data[axis - axis_first]), true))
 
           if (AXIS_VALUE_GET(0, axis_value)) {
-            window->GetTabletData().Xfac = (axis_value - xtablet.Xmin) /
-                                           ((float)xtablet.Xmax - xtablet.Xmin);
+            m_xtablet_xfac = (axis_value - xtablet.Xmin) /
+                             ((float)xtablet.Xmax - xtablet.Xmin);
           }
           if (AXIS_VALUE_GET(1, axis_value)) {
-            window->GetTabletData().Yfac = (axis_value - xtablet.Ymin) /
-                                           ((float)xtablet.Ymax - xtablet.Ymin);
+            m_xtablet_yfac = (axis_value - xtablet.Ymin) /
+                             ((float)xtablet.Ymax - xtablet.Ymin);
           }
 
           if (AXIS_VALUE_GET(2, axis_value)) {
@@ -2651,6 +2651,8 @@ static GHOST_TTabletMode tablet_mode_from_name(const char *name, const char *typ
 
 void GHOST_SystemX11::refreshXInputDevices()
 {
+  m_xtablet_xfac = m_xtablet_yfac = 0;
+
   if (m_xinput_version.present) {
     /* Close tablet devices. */
     clearXInputDevices();

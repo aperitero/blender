@@ -103,19 +103,13 @@ typedef struct GHOST_TabletData {
   float Pressure;           /* range 0.0 (not touching) to 1.0 (full pressure) */
   float Xtilt; /* range 0.0 (upright) to 1.0 (tilted fully against the tablet surface) */
   float Ytilt; /* as above */
-
-  /* The x/y normalized coordinates of the pen on the tablet (from 0 to 1). */
-  float Xfac;
-  float Yfac;
 } GHOST_TabletData;
 
 static const GHOST_TabletData GHOST_TABLET_DATA_NONE = {
     GHOST_kTabletModeNone, /* No cursor in range */
     1.0f,                  /* Pressure */
     0.0f,                  /* Xtilt */
-    0.0f,                  /* Ytilt */
-    0.0f,                  /* Xfac */
-    0.0f};                 /* Yfac */
+    0.0f};                 /* Ytilt */
 
 typedef enum {
   GHOST_kNotVisible = 0,
