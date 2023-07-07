@@ -963,40 +963,34 @@ int wm_window_fullscreen_toggle_exec(bContext *C, wmOperator *UNUSED(op))
 
 /* ************ events *************** */
 
-void wm_cursor_position_from_ghost(wmWindow *win, int *x, int *y)
+void wm_cursor_position_from_ghost(wmWindow *win, int *r_x, int *r_y)
 {
-  float fac = GHOST_GetNativePixelSize(win->ghostwin);
-
-  GHOST_ScreenToClient(win->ghostwin, *x, *y, x, y);
-  *x *= fac;
-
-  *y = (win->sizey - 1) - *y;
-  *y *= fac;
+  float x, y;
+  wm_cursor_position_from_ghost_hires(win, &x, &y);
+  *r_x = round_fl_to_int(x);
+  *r_y = round_fl_to_int(y);
 }
 
 void wm_cursor_position_from_ghost_hires(wmWindow *win,
-                                         int *x, int *y,
-                                         float *xHiRes, float *yHiRes)
+                                         float *r_x, float *r_y)
 {
   float fac = GHOST_GetNativePixelSize(win->ghostwin);
 
   int oldx, oldy;
-  oldx = *x;
-  oldy = *y;
+  oldx = round_fl_to_int(*r_x);
+  oldy = round_fl_to_int(*r_y);
 
-  GHOST_ScreenToClient(win->ghostwin, *x, *y, x, y);
+  int newx, newy;
 
-  *xHiRes += *x - oldx;
-  *yHiRes += *y - oldy;
+  GHOST_ScreenToClient(win->ghostwin, oldx, oldy, &newx, &newy);
 
-  *y = (win->sizey - 1) - *y;
-  *yHiRes = (win->sizey - 1) - *yHiRes;
+  *r_x += newx - oldx;
+  *r_y += newy - oldy;
 
-  *x *= fac;
-  *y *= fac;
+  *r_y = (win->sizey - 1) - *r_y;
 
-  *xHiRes *= fac;
-  *yHiRes *= fac;
+  *r_x *= fac;
+  *r_y *= fac;
 }
 
 void wm_cursor_position_to_ghost(wmWindow *win, int *x, int *y)
@@ -1494,8 +1488,7 @@ static int ghost_event_proc(GHOST_EventHandle evt, GHOST_TUserDataPtr C_void_ptr
         GHOST_TEventCursorData *cd = data;
 
         wm_cursor_position_from_ghost_hires(win,
-                                            &cd->x, &cd->y,
-                                            &cd->xHiRes, &cd->yHiRes);
+                                            &cd->x, &cd->y);
 
         wm_event_add_ghostevent(wm, win, type, data);
         break;

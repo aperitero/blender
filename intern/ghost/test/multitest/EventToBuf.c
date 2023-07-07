@@ -220,7 +220,7 @@ void event_to_buf(GHOST_EventHandle evt, char buf[128])
   switch (type) {
     case GHOST_kEventCursorMove: {
       GHOST_TEventCursorData *cd = data;
-      pos += sprintf(pos, " - pos: (%d, %d)", cd->x, cd->y);
+      pos += sprintf(pos, " - pos: (%f, %f)", cd->x, cd->y);
       break;
     }
     case GHOST_kEventButtonDown:

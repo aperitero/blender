@@ -43,6 +43,8 @@
 
 #include "MEM_guardedalloc.h"
 
+#include "BLI_math_base.h"
+
 #include "GHOST_C-api.h"
 
 #include "BLF_api.h"
@@ -274,7 +276,9 @@ static void mainwindow_handle(void *priv, GHOST_EventHandle evt)
     case GHOST_kEventCursorMove: {
       GHOST_TEventCursorData *cd = GHOST_GetEventData(evt);
       int x, y;
-      GHOST_ScreenToClient(mw->win, cd->x, cd->y, &x, &y);
+      GHOST_ScreenToClient(mw->win,
+                           round_fl_to_short(cd->x), round_fl_to_short(cd->y),
+                           &x, &y);
       mainwindow_do_move(mw, x, mw->size[1] - y - 1);
       break;
     }

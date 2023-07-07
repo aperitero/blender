@@ -970,8 +970,6 @@ void GHOST_SystemX11::processEvent(XEvent *xe)
         g_event = new GHOST_EventCursor(getMilliSeconds(),
                                         GHOST_kEventCursorMove,
                                         window,
-                                        xme.x_root,
-                                        xme.y_root,
                                         m_xtablet_xfac * screenWidth,
                                         m_xtablet_yfac * screenHeight,
                                         window->GetTabletData());

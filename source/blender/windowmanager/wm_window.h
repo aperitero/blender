@@ -71,7 +71,7 @@ bool wm_window_get_swap_interval(wmWindow *win, int *intervalOut);
 
 void wm_cursor_position_get(wmWindow *win, int *r_x, int *r_y);
 void wm_cursor_position_from_ghost(wmWindow *win, int *r_x, int *r_y);
-void wm_cursor_position_from_ghost_hires(wmWindow *win, int *r_x, int *r_y, float *xHiRes, float *yHiRes);
+void wm_cursor_position_from_ghost_hires(wmWindow *win, float *r_x, float *r_y);
 void wm_cursor_position_to_ghost(wmWindow *win, int *x, int *y);
 
 #ifdef WITH_INPUT_IME

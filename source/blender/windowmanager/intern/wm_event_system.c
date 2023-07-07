@@ -4509,8 +4509,8 @@ void wm_event_add_ghostevent(wmWindowManager *wm, wmWindow *win, int type, void 
     case GHOST_kEventCursorMove: {
       GHOST_TEventCursorData *cd = customdata;
 
-      copy_v2_v2_int(&event.x, &cd->x);
-      copy_v2_v2(&event.xHiRes, &cd->xHiRes);
+      round_v2i_v2fl(&event.x, &cd->x);
+      copy_v2_v2(&event.xHiRes, &cd->x);
 
       wm_stereo3d_mouse_offset_apply(win, &event.x);
       wm_tablet_data_from_ghost(&cd->tablet, &event.tablet);

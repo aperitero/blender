@@ -423,13 +423,9 @@ typedef void *GHOST_TEventDataPtr;
 
 typedef struct {
   /** The x-coordinate of the cursor position. */
-  int32_t x;
+  float x;
   /** The y-coordinate of the cursor position. */
-  int32_t y;
-
-  /** The x-y coordinates from higher resolution input devices like tablets. */
-  float xHiRes;
-  float yHiRes;
+  float y;
 
   /** Associated tablet data. */
   GHOST_TabletData tablet;

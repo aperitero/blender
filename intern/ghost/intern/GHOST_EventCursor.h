@@ -45,7 +45,7 @@ class GHOST_EventCursor : public GHOST_Event {
                     int32_t x,
                     int32_t y,
                     const GHOST_TabletData &tablet)
-      : GHOST_Event(msec, type, window), m_cursorEventData({x, y, (float)x, (float)y, tablet})
+      : GHOST_Event(msec, type, window), m_cursorEventData({(float)x, (float)y, tablet})
   {
     m_data = &m_cursorEventData;
   }
@@ -53,12 +53,10 @@ class GHOST_EventCursor : public GHOST_Event {
   GHOST_EventCursor(uint64_t msec,
                     GHOST_TEventType type,
                     GHOST_IWindow *window,
-                    int32_t x,
-                    int32_t y,
-                    float xHiRes,
-                    float yHiRes,
+                    float x,
+                    float y,
                     const GHOST_TabletData &tablet)
-      : GHOST_Event(msec, type, window), m_cursorEventData({x, y, xHiRes, yHiRes, tablet})
+      : GHOST_Event(msec, type, window), m_cursorEventData({x, y, tablet})
   {
     m_data = &m_cursorEventData;
   }
